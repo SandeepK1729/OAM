@@ -90,7 +90,15 @@ ipython_config.py
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
+/media/**
+!/media
 
+/static/**
+!/static
+
+*/migrations/**
+!*/migrations
+!*/migrations/__init__.py
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
