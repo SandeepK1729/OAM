@@ -93,6 +93,8 @@ ipython_config.py
 /media/**
 !/media
 
+/static/**
+!/static
 
 */migrations/**
 !*/migrations
