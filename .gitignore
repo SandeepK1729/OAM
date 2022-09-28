@@ -93,6 +93,7 @@ ipython_config.py
 /media/**
 !/media
 
+
 */migrations/**
 !*/migrations
 !*/migrations/__init__.py
