@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-e%n=ixydxg2!c8x&v1h_+rhllz&ljsyesp5h&^au-rbst)ygb8
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'oam-nocto.herokuapp.com'
+    'oam-nocto.herokuapp.com',
     '127.0.0.1'
 ]
 
