@@ -20,6 +20,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+AUTH_USER_MODEL = 'core.User'
 
 # Application definition
 
@@ -31,8 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'core',
-    'crispy_forms'
+    'core.apps.CoreConfig',
+    'att.apps.AttConfig',
+    'crispy_forms',
 
 ]
 
