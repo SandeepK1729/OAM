@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.contrib.auth import login as auth_login
 from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
     
     return render(request, 'home.html', {
@@ -22,3 +24,6 @@ def signup(request):
     return render(request, 'registration/signup.html', {
         'form' : form,
     })
+
+def about(request):
+    return render(request, 'about.html')

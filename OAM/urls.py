@@ -6,9 +6,11 @@ from django.views.static import serve
 
 # core app urls 
 from core import urls as coreUrls
+from att  import urls as attUrls
 
 urlpatterns = [
     path('', include(coreUrls)),
+    path('', include(attUrls)),
     path('admin/', admin.site.urls, name = 'admin'),
     re_path(r'media/(?P<path>)', serve, {'document_root' : settings.MEDIA_ROOT})
 ]
