@@ -21,24 +21,12 @@ DAYS_OF_WEEK = (
     ('Saturday', 'Saturday'),
 )
 
-class Dept(models.Model):
-    dept_types = (
-                    ('CSE', 'Computer Science & Engineering'),
-                    ('ECE', 'Electronics & Communication Engineering'),
-                    ('EEE', 'Electronics & Electrical Engineering'),
-                    ('MECH', 'Mechanical Engineering'),
-                    ('CIV', 'Civil Engineering'),
-                    ('IT', 'Information Technology'),
-                    ('CSC', 'Computer Science & Engineering - Cybersecurity'),
-                    ('CSM', 'Computer Science & Engineering - Artificial Intelligence & Machine Learning'),
-                    ('AIDS', 'Artificial Intelligence & Machine Learning and Data Science'),
-                    
-                )
-
-    name = models.CharField(max_length=200, choices = dept_types, default=dept_types[7][1])
+class Department(models.Model):
+    name = models.CharField(_("Name of the Department"), max_length=200)#, choices = dept_types, default=dept_types[7][1])
+    short_name = models.CharField(max_length = 10, primary_key = True)
 
     def __str__(self):
-        return self.name
+        return self.short_name
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
@@ -112,7 +100,7 @@ class Student(models.Model):
             )
     
     branch  = models.ForeignKey(
-                Dept,
+                Department,
                 on_delete = models.CASCADE,
                 verbose_name = "belongs to department",
             )
@@ -151,7 +139,7 @@ class Staff(models.Model):
 
 class Section(models.Model):
     name        = models.CharField(max_length = 10)
-    # dept        = models.ForeignKey(Dept, on_delete=models.CASCADE)
+    dept        = models.ForeignKey(Department, on_delete=models.CASCADE)
     subjects    = models.ManyToManyField(Subject)# on_delete=models.CASCADE)
     students    = models.ManyToManyField(Student)
     staffs      = models.ManyToManyField(Staff)

@@ -9,7 +9,7 @@ from core import urls as coreUrls
 
 urlpatterns = [
     path('', include(coreUrls)),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name = 'admin'),
     re_path(r'media/(?P<path>)', serve, {'document_root' : settings.MEDIA_ROOT})
 ]
 

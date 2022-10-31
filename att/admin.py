@@ -5,8 +5,11 @@ from .models import *
 admin.site.register(Student)
 admin.site.register(Staff)
 admin.site.register(Section)
-admin.site.register(Dept)
+admin.site.register(Department)
 admin.site.register(Subject)
 admin.site.register(Batch)
 admin.site.register(Period)
 admin.site.register(Attendance)
+
+from .helper import help
+#help()

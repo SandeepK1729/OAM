@@ -23,7 +23,8 @@ class User(AbstractUser):
     user_type        = models.CharField(
                     max_length = 10, 
                     choices = user_types,
-                    default='student'
+                    default='student',
+                    null = False,
                 )
     gender      = models.CharField(
                     max_length=50, 

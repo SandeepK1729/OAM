@@ -41,7 +41,10 @@
 								{{ user.username }}
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
+                <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
+                {% if user.user_type == 'admin' %}
+                  <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
+                {% endif %}
 								<!--<li><a href="{% url 'password_reset' %}" class="dropdown-item">Password Reset</a></li>-->
 
 								<li><hr class="dropdown-divider"></li>
