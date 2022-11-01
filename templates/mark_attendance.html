@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h2>Mark Attendance</h2>
+            <form method="post">
+                {% csrf_token %}
+                <p>{{ section.subjects }}</p>
+                <input type="submit" value="login" class="mt-2 btn btn-primary">
+            </form>
+        </div>
+    </div>
+{% endblock body %}

@@ -138,7 +138,7 @@ class Staff(models.Model):
         return f"{self.user.first_name} {self.user.last_name}"
 
 class Section(models.Model):
-    name        = models.CharField(max_length = 10)
+    name        = models.CharField(max_length = 10, primary_key = True)
     dept        = models.ForeignKey(Department, on_delete=models.CASCADE)
     subjects    = models.ManyToManyField(Subject)# on_delete=models.CASCADE)
     students    = models.ManyToManyField(Student)

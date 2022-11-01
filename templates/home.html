@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         
-        <h1>Hello, {% if user.is_authenticated %}{{ user.username }}{% else %}World{% endif %}!</h1>
+        <h1>Hello, {{ user.first_name }} {{ user.last_name }}!</h1>
         
         <p><strong>User {{ user }} registered are : </strong>{{ count }}</p>
     </div>
