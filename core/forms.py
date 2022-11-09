@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 
 class CustomUserCreationForm(UserCreationForm):
-    
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("username", "first_name", "last_name",'user_type', 

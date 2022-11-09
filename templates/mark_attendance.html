@@ -4,10 +4,48 @@
     <div class="row justify-content-center">
         <div class="col-6">
             <h2>Mark Attendance</h2>
-            <form method="post">
+            <form method="post" class="align-items-center">
                 {% csrf_token %}
-                <p>{{ section.subjects }}</p>
-                <input type="submit" value="login" class="mt-2 btn btn-primary">
+                
+                <div class="form-group">   
+                    <label for="date">Date : </label>
+                    <input type="date" name="date" id="date" value="{{today}}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="hour" >Hour : </label>
+                    <select name="hour" id="hour" required>
+                        {% for period, time in periods %}
+                            <option value="{{period}}">{{period}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject" >Subject : </label>
+                    <select name="subject" id="subject" required>
+                            {% for each_subject in subjects %}
+                                <option value="{{each_subject}}" {% if each_subject == student %} selected {% endif %}>{{each_subject.short_name}}</option>
+                            {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="status">Status : </label>
+                    <select name="status" id="tees">
+                        <option value="p" {% if status == "p" %} selected {% endif %}>Presentees</option>
+                        <option value="a" {% if status == "p" %} selected {% endif %}>Absentees</option>
+                    </select>
+                </div>
+                
+                <div class="form-check">
+                    {% for student in students %} 
+                        <input type="checkbox" class="form-check-input" name="{{ student.roll_no }}" value="{{ student.roll_no }}" {% if student in members %} checked {% endif %}> 
+                        <label class="form-check-label" for="{{ student }}">{{ student }}</label> <br>
+                    {% endfor %}
+                </div>
+            
+                <input class="btn btn-primary" type="submit" value="Update">
             </form>
         </div>
     </div>

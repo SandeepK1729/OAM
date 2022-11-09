@@ -30,7 +30,7 @@ class Department(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=50)
-    shortname = models.CharField(max_length=50, default='X')
+    short_name = models.CharField(max_length=50, default='X')
 
     def __str__(self):
         return self.name
@@ -55,10 +55,9 @@ class Student(models.Model):
     user    = models.OneToOneField(
                 User, 
                 on_delete=models.CASCADE,
-                 
-                primary_key = True
+                primary_key = True,
             )
-    roll_no = models.CharField(_("Roll no"), max_length = 10, editable = False)
+    roll_no = models.CharField(_("Roll no"), max_length = 10, editable = True)
     
     primary_mobile  = models.CharField(
                 _("Student Mobile no."), 
@@ -107,16 +106,6 @@ class Student(models.Model):
     year    = models.ForeignKey(Batch, on_delete=models.CASCADE)
 
     class Meta:
-        """
-        ordering    = [
-                        'roll_no', 
-                        'primary_mobile',
-                        'secondary_mobile' 
-                        'father_name',
-                        'father_mobile',
-                        'mother_name',
-                        'mother_mobile',
-                    ]"""
         verbose_name_plural = 'students'
     
     def __str__(self):
@@ -135,7 +124,7 @@ class Staff(models.Model):
     jntu_id         = models.CharField(null = True, blank = True, max_length = 20)
     
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user}"
 
 class Section(models.Model):
     name        = models.CharField(max_length = 10, primary_key = True)
@@ -143,6 +132,7 @@ class Section(models.Model):
     subjects    = models.ManyToManyField(Subject)# on_delete=models.CASCADE)
     students    = models.ManyToManyField(Student)
     staffs      = models.ManyToManyField(Staff)
+    #periods     = models.ManyToManyRel(field, to)
 
     def __str__(self):
         return self.name
@@ -155,9 +145,16 @@ class Period(models.Model):
         return f" {self.hour} on {self.date}"
 
 class Attendance(models.Model):
-    period      = models.OneToOneField(Period, on_delete = models.CASCADE)
-    student     = models.OneToOneField(Student, on_delete = models.CASCADE)
-    student_status = models.CharField(max_length = 10, choices = (('Absent', 'A'), ('Present', 'P')))
+    period      = models.ForeignKey(Period, on_delete = models.CASCADE)
+    subject     = models.ForeignKey(Subject, on_delete = models.CASCADE)
+    student     = models.ForeignKey(Student, on_delete = models.CASCADE)
+    student_status = models.CharField(
+                    max_length = 10, 
+                    choices = (
+                        ('Absent', 'A'), 
+                        ('Present', 'P')
+                    )
+                )
 
     def __str__(self) -> str:
         return f"{self.student.user.first_name} {self.student.user.last_name} is {self.student_status} for {self.period}"
