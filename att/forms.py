@@ -1,7 +1,6 @@
 from django import forms  
 from django.utils import timezone
 from .models import time_slots, Student
-from django.contrib.postgres.forms import SimpleArrayField
 import datetime 
 
 class AttendanceMarkForm(forms.Form):
