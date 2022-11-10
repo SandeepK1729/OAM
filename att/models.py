@@ -126,26 +126,27 @@ class Staff(models.Model):
     def __str__(self):
         return f"{self.user}"
 
+class Period(models.Model):
+    date        = models.DateField(default = timezone.now)
+    hour        = models.CharField(max_length = 15, choices = time_slots)
+    
+    def __str__(self):
+        return f" {self.hour} on {self.date}"
+
 class Section(models.Model):
     name        = models.CharField(max_length = 10, primary_key = True)
     dept        = models.ForeignKey(Department, on_delete=models.CASCADE)
     subjects    = models.ManyToManyField(Subject)# on_delete=models.CASCADE)
     students    = models.ManyToManyField(Student)
     staffs      = models.ManyToManyField(Staff)
-    #periods     = models.ManyToManyRel(field, to)
+    periods     = models.ManyToManyField(Period)
 
     def __str__(self):
         return self.name
 
-class Period(models.Model):
-    date        = models.DateField(default = timezone.now)
-    hour        = models.CharField(max_length = 15, choices = time_slots)
-
-    def __str__(self):
-        return f" {self.hour} on {self.date}"
-
 class Attendance(models.Model):
-    period      = models.ForeignKey(Period, on_delete = models.CASCADE)
+    section     = models.ForeignKey(Section, on_delete = models.CASCADE)
+    period      = models.ForeignKey(Period,  on_delete = models.CASCADE)
     subject     = models.ForeignKey(Subject, on_delete = models.CASCADE)
     student     = models.ForeignKey(Student, on_delete = models.CASCADE)
     student_status = models.CharField(

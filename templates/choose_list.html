@@ -4,20 +4,19 @@
 
 <div class="row justify-content-center">
     <div class="col-6">
-        <ol>
+        <ul>
         {% for section in sections %}
             <li>
                 <a 
-                    class="btn btn-primary outline " 
-                    href="mark_attendance/{{section}}"
-                >   
+                    class="btn btn-outline-primary text-success" 
+                    href="/show_attendance/{{ section }}"
+                >
                     {{ section }} 
                 </a>
             </li>
             <br>
         {% endfor %}
-        </ol>
+        </ul>
     </div>
 </div>
-
 {% endblock body %}

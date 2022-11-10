@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <div class="col-10">
+        <a 
+            href="/mark_attendance/{{ section }}/new" 
+            class="btn btn-primary"
+        >
+            Mark Attendance
+        </a>
+        <div class="flex flex-col">
+            
+            <table class="min-w-full border text-center table table-hover table-bordered">
+                <thead class="border-b">
+                    <tr>
+                        <th scope="col">ID          </th>
+                        <th scope="col">Date        </th>
+                        <th scope="col">Period      </th>
+                        <th scope="col">Subject     </th>
+                        <th scope="col">Presentees  </th>
+                        <th scope="col">Absentees   </th>
+                        <th scope="col">Show        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, date, hour, subject, presentee, absentee in periods %}
+                        <tr class="border-b">
+                            <td scope="row">
+                                {{ id }}
+                            </td>
+                            <td >
+                                {{ date }}
+                            </td>
+                            <td >
+                                {{ hour }}
+                            </td>
+                            <td >
+                                {{ subject }}
+                            </td>
+                            <td >
+                                {{ presentee }}
+                            </td>
+                            <td >
+                                {{ absentee }}
+                            </td>
+                            <td>
+                                <a 
+                                    href="/update_attendance/{{ section }}/{{ id }}"
+                                    class = "btn btn-primary"
+                                >
+                                    Update 
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

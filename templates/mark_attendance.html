@@ -7,7 +7,7 @@
             <form method="post" class="align-items-center">
                 {% csrf_token %}
                 
-                <div class="form-group">   
+                <div class="form-group">
                     <label for="date">Date : </label>
                     <input type="date" name="date" id="date" value="{{today}}">
                 </div>
@@ -16,7 +16,7 @@
                     <label for="hour" >Hour : </label>
                     <select name="hour" id="hour" required>
                         {% for period, time in periods %}
-                            <option value="{{period}}">{{period}}</option>
+                            <option value="{{period}}" {% if period == hour %} selected {% endif %}>{{period}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -25,7 +25,7 @@
                     <label for="subject" >Subject : </label>
                     <select name="subject" id="subject" required>
                             {% for each_subject in subjects %}
-                                <option value="{{each_subject}}" {% if each_subject == student %} selected {% endif %}>{{each_subject.short_name}}</option>
+                                <option value="{{each_subject}}" {% if each_subject == subject %} selected {% endif %}>{{each_subject.short_name}}</option>
                             {% endfor %}
                     </select>
                 </div>
@@ -33,15 +33,28 @@
                 <div class="form-group">
                     <label for="status">Status : </label>
                     <select name="status" id="tees">
-                        <option value="p" {% if status == "p" %} selected {% endif %}>Presentees</option>
-                        <option value="a" {% if status == "p" %} selected {% endif %}>Absentees</option>
+                        <option value="p" selected>Presentees</option>
+                        <option value="a">Absentees</option>
                     </select>
                 </div>
                 
                 <div class="form-check">
                     {% for student in students %} 
-                        <input type="checkbox" class="form-check-input" name="{{ student.roll_no }}" value="{{ student.roll_no }}" {% if student in members %} checked {% endif %}> 
-                        <label class="form-check-label" for="{{ student }}">{{ student }}</label> <br>
+                        <input 
+                            type="checkbox" 
+                            class="form-check-input" 
+                            name="{{ student.roll_no }}" 
+                            value="{{ student.roll_no }}" 
+                            {% if student in presentees %} 
+                                checked 
+                            {% endif %}
+                        > 
+                        <label 
+                            class="form-check-label" 
+                            for="{{ student }}"
+                        >
+                            {{ student }}
+                        </label><br>
                     {% endfor %}
                 </div>
             
