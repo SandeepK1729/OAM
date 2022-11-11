@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+    <div class="col-7">
+        <a 
+            href="/mark_attendance/{{ section }}/new" 
+            class="btn btn-primary"
+        >
+            My Periods
+        </a>
+        <div class="flex flex-col">
+            
+            <table class="min-w-full border text-center table table-hover table-bordered">
+                <thead class="border-b">
+                    <tr>
+                        <th scope="col">ID          </th>
+                        <th scope="col">Date        </th>
+                        <th scope="col">Period      </th>
+                        <th scope="col">Subject     </th>
+                        <th scope="col">My Status   </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for att in atts %}
+                        <tr class="border-b">
+                            <td scope="row">
+                                {{ att.id }}
+                            </td>
+                            <td >
+                                {{ att.period.date }}
+                            </td>
+                            <td >
+                                {{ att.period.hour }}
+                            </td>
+                            <td >
+                                {{ att.subject }}
+                            </td>
+                            <td >
+                                {{ att.student_status }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

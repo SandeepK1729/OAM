@@ -3,14 +3,16 @@ from django.contrib.auth.decorators import login_required
 from .decorators import faculty_login_required
 from django.utils.translation import gettext_lazy as _
 
-from .models    import Department, Section, Period, time_slots, Attendance, Subject
+from .models    import Department, Section, Period, time_slots, Attendance, Subject, Student
 from .forms     import AttendanceMarkForm
+from core.models import User
 
 import datetime 
 
 @login_required
 @faculty_login_required
 def departments(request):
+    # print(request.user.staff_set)
     return render(request, 'depts.html', {
         'departments' : Department.objects.filter()
     })
@@ -131,7 +133,7 @@ def update_marked_attendance(request, section_name, period_id = 0):
 @login_required
 @faculty_login_required
 def show_attendance(request, section_name):
-    section     =Section.objects.get(name = section_name)
+    section     = Section.objects.get(name = section_name)
     periods     = Section.objects.get(name = section_name).periods.all()
     section_attendance = Attendance.objects.filter(section=section)
 
@@ -168,3 +170,14 @@ def show_attendance(request, section_name):
          'section' : section,
     })
 
+@login_required
+def student_home(request):
+    user        = User.objects.get(username = request.user.username)
+    student     = Student.objects.get(user = user)
+
+    atts = Attendance.objects.filter(student = student)
+
+    print(atts)
+    return render(request, 'student_details.html', {
+        'atts' : atts,
+    })

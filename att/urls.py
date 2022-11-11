@@ -30,4 +30,10 @@ urlpatterns = [
         views.update_marked_attendance, 
         name='update attendance'
     ),
+
+    path(
+        'student_details',
+        views.student_home,
+        name = 'student details',
+    )
 ]

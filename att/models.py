@@ -56,6 +56,8 @@ class Student(models.Model):
                 User, 
                 on_delete=models.CASCADE,
                 primary_key = True,
+                # parent_link = True,
+                # related_name = 'student'
             )
     roll_no = models.CharField(_("Roll no"), max_length = 10, editable = True)
     
@@ -115,7 +117,9 @@ class Staff(models.Model):
     user    = models.OneToOneField(
                 User, 
                 on_delete=models.CASCADE, 
-                primary_key = True
+                primary_key = True,
+                #parent_link = True,
+                #related_name = 'staff'
             )
     qualification   = models.CharField(null = True, blank = True, max_length = 20)
     designation     = models.CharField(null = True, blank = True, max_length = 20)
