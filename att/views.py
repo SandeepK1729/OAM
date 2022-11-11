@@ -231,8 +231,7 @@ def show_report(request, section_name):
 def acadamic_info(request):
     header = ["Name", "Notes Link"]
     data   = [[name, link] for name, link in acadamics.items()]
-    print(data)
-
+    
     return render(request, 'links.html', {
         'headers' : header,
         'data' : data,
