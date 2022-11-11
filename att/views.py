@@ -7,6 +7,7 @@ from .models    import Department, Section, Period, time_slots, Attendance, Subj
 from .forms     import AttendanceMarkForm
 from core.models import User
 
+from .acadamic_data import acadamics
 import datetime 
 
 @login_required
@@ -70,7 +71,6 @@ def mark_attendance(request, section_name):
             att.save()
         return redirect(f'/show_attendance/{section}')
         
-        # context.update(request.POST)
     
     return render(request, 'mark_attendance.html', context)
 
@@ -176,8 +176,95 @@ def student_home(request):
     student     = Student.objects.get(user = user)
 
     atts = Attendance.objects.filter(student = student)
-
-    print(atts)
+    
     return render(request, 'student_details.html', {
         'atts' : atts,
+        'section' : atts.first().section,
+    })
+
+def get_classes_count(section, subject, student):
+    return Attendance.objects.filter(
+                    section = section, 
+                    subject = subject,
+                    student = student,
+                ).count()
+
+def get_present_classes_count(section, subject, student):
+    return Attendance.objects.filter(
+                    section = section, 
+                    subject = subject,
+                    student = student,
+                    student_status = "Present",
+                ).count()
+
+@login_required
+@faculty_login_required
+def show_report(request, section_name):
+    section     = Section.objects.get(name = section_name)
+    students    = section.students.all()
+    subjects    = section.subjects.all()
+
+    total_classes = {
+        subject.name : get_classes_count(section, subject, students.first()) for subject in subjects
+    }
+
+    header = ["Roll no"] + [f"{name} ({count})" for name, count in total_classes.items()] + ["Percentage"]
+
+    data = []
+
+    for student in students:
+        row = [student.roll_no]
+        per = 0 
+        for subject in subjects:
+            present_count = get_present_classes_count(section, subject, student)
+            row.append(present_count)
+            per += present_count / total_classes[subject.name]
+        row.append(round(per * 100 / len(total_classes), 2))
+        data.append(row)
+        
+    return render(request, 'table.html', {
+        'headers' : header,
+        'data' : data,
+    })
+
+@login_required
+def acadamic_info(request):
+    header = ["Name", "Notes Link"]
+    data   = [[name, link] for name, link in acadamics.items()]
+    print(data)
+
+    return render(request, 'links.html', {
+        'headers' : header,
+        'data' : data,
+    })
+
+@login_required
+def show_student_report(request, section_name):
+    section     = Section.objects.get(name = section_name)
+    student     = Student.objects.get(user = request.user)
+    subjects    = section.subjects.all()
+
+    total_classes = {
+        subject.name : get_classes_count(section, subject, student) for subject in subjects
+    }
+
+    per = 0 
+    
+    counts = ["Present Count"]
+    percen = ["Percentage"] 
+
+    for subject in subjects:
+        present_count = get_present_classes_count(section, subject, student)
+        counts.append(present_count)
+
+        percentage_of_subject = round(present_count / total_classes[subject.name] * 100, 2)
+        percen.append(percentage_of_subject)
+        
+        per += percentage_of_subject
+        
+    return render(request, 'table.html', {
+        'headers'   : ["Subjects"] + [f"{name} ({count})" for name, count in total_classes.items()],
+        'data'      : [counts, percen],
+        'percentage': per / len(counts),
+        'include_percentage' : True,
     })

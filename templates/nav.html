@@ -25,17 +25,14 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'departments' %}">Departments</a>
           </li>
-          <!--<li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'view_sections' %}">Mark Attendance</a>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'student details' %}">Student Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'acadamic info' %}">Acadamic Info</a>
           </li>
           
-              <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-            </li>-->
-              
           {% endif %}
 
 
@@ -56,6 +53,7 @@
           
         </ul>
 
+        
 				{% if user.is_authenticated %}
 					<ul class="navbar-nav mr-0 mb-2 mb-lg-0">
 						<li class="nav-item dropdown">

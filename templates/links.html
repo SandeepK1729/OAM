@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if include_percentage %} {% include 'percentage.html' %} {% endif %}
+<div class="row justify-content-center">
+    <div class="col-4">
+        <div class="flex flex-col">
+            
+            <table class="min-w-full border text-center table table-hover table-bordered">
+                <thead class="border-b">
+                    <tr>
+                        {% for header in headers %}
+                            <th scope="col">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, link in data %}
+                        <tr class="border-b">
+                                <td>{{ name }}</td>
+                                <td><a href="{{ link }}" class="btn btn-secondary">Visit</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

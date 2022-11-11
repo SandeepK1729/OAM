@@ -31,6 +31,7 @@ class Department(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=50)
     short_name = models.CharField(max_length=50, default='X')
+    # link = models.URLField()
 
     def __str__(self):
         return self.name

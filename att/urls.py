@@ -35,5 +35,23 @@ urlpatterns = [
         'student_details',
         views.student_home,
         name = 'student details',
-    )
+    ),
+
+    path(
+        'show_report/<str:section_name>/',
+        views.show_report,
+        name = 'show report'
+    ),
+
+    path(
+        'show_myreport/<str:section_name>/',
+        views.show_student_report,
+        name = 'show my report'
+    ),
+    path(
+        'acadamic_info',
+        views.acadamic_info,
+        name = 'acadamic info',
+    ),
+    
 ]

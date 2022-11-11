@@ -1,0 +1,66 @@
+
+    <canvas id="myCanvas" width="578" height="250"></canvas>
+    <script>
+
+      function degreesToRadians(deg) {
+        return (deg/180) * Math.PI;
+      }
+
+      function percentToRadians(percentage) {
+        // convert the percentage into degrees
+        var degrees = percentage * 360 / 100;
+        // and so that arc begins at top of circle (not 90 degrees) we add 270 degrees
+        return degreesToRadians(degrees + 270);
+      }
+
+      function drawPercentageCircle(percentage, radius, canvas) {
+      var context = canvas.getContext('2d');
+      canvas.style.backgroundColor = 'white';
+
+      var x = canvas.width / 2;
+      var y = canvas.height / 2;
+      var startAngle = percentToRadians(0);
+      var endAngle = percentToRadians(percentage);
+      // set to true so that we draw the missing percentage
+      var counterClockwise = true;
+
+      context.beginPath();
+      context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+      context.lineWidth = 16;
+
+      // line color
+      context.strokeStyle = 'blue';
+      context.stroke();
+
+      // set to false so that we draw the actual percentage
+      counterClockwise = false;
+
+      context.beginPath();
+      context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+      context.lineWidth = 20;
+
+      // line color
+      context.strokeStyle = 'cyan';
+      context.stroke();
+
+      // now draw the inner text
+            context.font = radius/2.5 + "px Helvetica";
+            context.fillStyle = "red";
+            context.textAlign = "center";
+            // baseline correction for text
+            context.fillText(percentage+"%", x, y*1.05); 
+      }
+     // implantation happens here
+
+        var canvas = document.getElementById('myCanvas');
+        var percentage = 70;
+        var radius;
+        if (myCanvas.height < myCanvas.width) {
+            radius = myCanvas.height / 3;
+        }
+        else {
+            radius = myCanvas.width / 3;
+        }
+      drawPercentageCircle(percentage, radius, canvas);
+
+    </script>
