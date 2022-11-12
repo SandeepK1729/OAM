@@ -69,7 +69,7 @@ def mark_attendance(request, section_name):
                 student_status = attendance_status
             )
             att.save()
-        return redirect(f'/show_attendance/{section}')
+        return redirect(f'/show_attendance/{section}/')
         
     
     return render(request, 'mark_attendance.html', context)
@@ -126,7 +126,7 @@ def update_marked_attendance(request, section_name, period_id = 0):
                 student_status = "Present" if student.roll_no in members and status == "p" else "Absent"
             )
             att.save()
-        return redirect(f'/show_attendance/{section}')
+        return redirect(f'/show_attendance/{section}/')
         
     return render(request, 'mark_attendance.html', context)
 
@@ -134,20 +134,26 @@ def update_marked_attendance(request, section_name, period_id = 0):
 @faculty_login_required
 def show_attendance(request, section_name):
     section     = Section.objects.get(name = section_name)
-    periods     = Section.objects.get(name = section_name).periods.all()
+    periods     = section.periods.all()
     section_attendance = Attendance.objects.filter(section=section)
 
     ids, hours, dates, subjects, presentees, absentees = [], [], [], [], [], []
-    
-    for each_period in periods.all():
-        student_attendance = section_attendance.filter(period = each_period).all()
 
+    for each_period in periods:
+        student_attendance = section_attendance.filter(period = each_period).all()
+        
+        try:
+            subjects.append(student_attendance.first().subject.short_name)
+        except:
+            continue
+        print(student_attendance)
+        
         ids.append(each_period.id)
         dates.append(each_period.date)
         hours.append(each_period.hour)
-        subjects.append(student_attendance[0].subject)
+        # print(student_attendance)
         
-        print(student_attendance)
+        # print(student_attendance)
 
         p, a = 0, 0 
         for each_student in student_attendance:
@@ -157,7 +163,7 @@ def show_attendance(request, section_name):
                 a += 1 
         presentees.append(p)
         absentees.append(a)
-
+    print(ids, dates, hours, subjects, absentees)
     return render(request, 'show_periods.html', {
         'periods' : zip(
                         ids, 
@@ -208,7 +214,8 @@ def show_report(request, section_name):
         subject.name : get_classes_count(section, subject, students.first()) for subject in subjects
     }
 
-    header = ["Roll no"] + [f"{name} ({count})" for name, count in total_classes.items()] + ["Percentage"]
+    header = ["Roll no"] + [f"{name} ({count})" for name, count in 
+    total_classes.items()] + ["Percentage"]
 
     data = []
 
@@ -218,7 +225,7 @@ def show_report(request, section_name):
         for subject in subjects:
             present_count = get_present_classes_count(section, subject, student)
             row.append(present_count)
-            per += present_count / total_classes[subject.name]
+            per += 1 if total_classes[subject.name] == 0 else present_count / total_classes[subject.name]
         row.append(round(per * 100 / len(total_classes), 2))
         data.append(row)
         
@@ -256,14 +263,14 @@ def show_student_report(request, section_name):
         present_count = get_present_classes_count(section, subject, student)
         counts.append(present_count)
 
-        percentage_of_subject = round(present_count / total_classes[subject.name] * 100, 2)
+        percentage_of_subject = round((1 if total_classes[subject.name] == 0 else present_count / total_classes[subject.name]) * 100, 2)
         percen.append(percentage_of_subject)
         
         per += percentage_of_subject
-        
+    
     return render(request, 'table.html', {
         'headers'   : ["Subjects"] + [f"{name} ({count})" for name, count in total_classes.items()],
         'data'      : [counts, percen],
-        'percentage': per / len(counts),
+        'percentage': per / subjects.count(),
         'include_percentage' : True,
     })

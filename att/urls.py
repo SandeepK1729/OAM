@@ -14,7 +14,7 @@ urlpatterns = [
     ),
     
     path(
-        'show_attendance/<str:section_name>', 
+        'show_attendance/<str:section_name>/', 
         views.show_attendance, 
         name='show attendance'
     ),
@@ -38,7 +38,7 @@ urlpatterns = [
     ),
 
     path(
-        'show_report/<str:section_name>/',
+        'show_report/<str:section_name>',
         views.show_report,
         name = 'show report'
     ),
