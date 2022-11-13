@@ -146,6 +146,7 @@ def show_attendance(request, section_name):
             subjects.append(student_attendance.first().subject.short_name)
         except:
             continue
+        
         print(student_attendance)
         
         ids.append(each_period.id)
