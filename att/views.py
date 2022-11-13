@@ -215,8 +215,9 @@ def show_report(request, section_name):
         subject.name : get_classes_count(section, subject, students.first()) for subject in subjects
     }
 
-    header = ["Roll no"] + [f"{name} ({count})" for name, count in 
-    total_classes.items()] + ["Percentage"]
+    header = ["Roll no"] + [
+                f"{subject.short_name} ({get_classes_count(section, subject, students.first())})" for subject in subjects
+                    ] + ["Percentage"]
 
     data = []
 
@@ -270,7 +271,9 @@ def show_student_report(request, section_name):
         per += percentage_of_subject
     
     return render(request, 'table.html', {
-        'headers'   : ["Subjects"] + [f"{name} ({count})" for name, count in total_classes.items()],
+        'headers'   : ["Roll no"] + [
+                f"{subject.short_name} ({get_classes_count(section, subject, student)})" for subject in subjects
+                    ] + ["Percentage"],
         'data'      : [counts, percen],
         'percentage': per / subjects.count(),
         'include_percentage' : True,
