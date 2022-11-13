@@ -10,9 +10,6 @@ local_settings.py
 /media/**
 !/media
 
-/static/**
-!/static
-
 */migrations/**
 !*/migrations
 !*/migrations/__init__.py
