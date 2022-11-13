@@ -273,7 +273,7 @@ def show_student_report(request, section_name):
     return render(request, 'table.html', {
         'headers'   : ["Roll no"] + [
                 f"{subject.short_name} ({get_classes_count(section, subject, student)})" for subject in subjects
-                    ] + ["Percentage"],
+                    ],
         'data'      : [counts, percen],
         'percentage': per / subjects.count(),
         'include_percentage' : True,
