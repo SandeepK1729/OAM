@@ -17,7 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'oam-nocto.herokuapp.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    'oam.onrender.com',
 ]
 
 AUTH_USER_MODEL = 'core.User'
