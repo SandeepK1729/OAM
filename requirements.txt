@@ -4,4 +4,6 @@ gunicorn
 six
 django-crispy-forms
 crispy-bootstrap5
-
+django-environ
+dj_database_url
+psycopg2==2.9.5
