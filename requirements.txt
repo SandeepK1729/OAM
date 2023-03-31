@@ -1,8 +1,6 @@
-django
+django==3.2
 whitenoise
 gunicorn
 six
 django-crispy-forms
 crispy-bootstrap5
-pysqlite3
-pysqlite3-binary
