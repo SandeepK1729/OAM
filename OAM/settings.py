@@ -19,6 +19,7 @@ ALLOWED_HOSTS = [
     'oam-nocto.herokuapp.com',
     '127.0.0.1',
     'oam.onrender.com',
+    '.vercel.app',
 ]
 
 AUTH_USER_MODEL = 'core.User'
