@@ -1,6 +1,7 @@
-django==3.2
+django
 whitenoise
 gunicorn
 six
 django-crispy-forms
 crispy-bootstrap5
+
